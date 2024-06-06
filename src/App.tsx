@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import routes from './servises/routes';
+import logo from './images/logo.png';
 
-function App() {
+import Weather from './components/weatherComponents/Weather';
+import NotFound from './components/general/NotFound';
+import FirstPage from './components/general/FirstPage';
+
+const App: React.FC = () => {
+  const navigate = useNavigate();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      {window.location.href !== 'http://localhost:3000/' && (
+        <button
+          type="button"
+          onClick={() => {
+            navigate(routes.firstPage);
+          }}
+          className="logo_btn"
         >
-          Learn React
-        </a>
-      </header>
+          <img src={logo} alt="" className="logo_btn_img" />
+        </button>
+      )}
+
+      <Routes>
+        <Route path={routes.firstPage} element={<FirstPage />} />
+        <Route path={routes.weather} element={<Weather />} />
+        <Route path={routes.notFound} element={<NotFound />} />
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
